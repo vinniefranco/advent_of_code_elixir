@@ -38,10 +38,7 @@ defmodule AdventOfCode.Day1 do
 
   """
   def floor(str) do
-    str
-    |> String.length
-    |> with_negatives(str)
-    |> compute_floor
+    str |> String.length |> with_negatives(str) |> compute_floor
   end
 
   @doc ~S"""
@@ -59,6 +56,9 @@ defmodule AdventOfCode.Day1 do
        iex> AdventOfCode.Day1.position("()())")
        5
 
+       iex> AdventOfCode.Day1.position("(((")
+       :error
+
 
   """
   def position(str) do
@@ -69,19 +69,20 @@ defmodule AdventOfCode.Day1 do
     position
   end
 
-  defp on_position(<<"(", rest::binary>>, position, total) do
+  defp on_position("", position, total) do
+    :error
+  end
+
+  defp on_position("(" <> rest, position, total) do
     on_position(rest, position + 1, total + 1)
   end
 
-  defp on_position(<<")", rest::binary>>, position, total) do
+  defp on_position(")" <> rest, position, total) do
     on_position(rest, position + 1, total - 1)
   end
 
   defp with_negatives(total_length, str) do
-    negatives_length =
-      str
-      |> String.replace("(", "")
-      |> String.length
+    negatives_length = str |> String.replace("(", "") |> String.length
 
     {total_length, negatives_length}
   end
