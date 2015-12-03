@@ -65,20 +65,20 @@ defmodule AdventOfCode.Day1 do
     on_position(str, 0, 0)
   end
 
-  defp on_position(_str, position, -1) do
-    position
+  defp on_position(_str, pos, -1) do
+    pos
   end
 
-  defp on_position("", position, total) do
+  defp on_position("", pos, total) do
     :error
   end
 
-  defp on_position("(" <> rest, position, total) do
-    on_position(rest, position + 1, total + 1)
+  defp on_position("(" <> rest, pos, total) do
+    on_position(rest, pos + 1, total + 1)
   end
 
-  defp on_position(")" <> rest, position, total) do
-    on_position(rest, position + 1, total - 1)
+  defp on_position(")" <> rest, pos, total) do
+    on_position(rest, pos + 1, total - 1)
   end
 
   defp with_negatives(total_length, str) do
