@@ -93,6 +93,7 @@ defmodule AdventOfCode.Day3 do
     |> Enum.join("")
   end
 
+
   defp visited_coords(directions, grid \\ %{"0:0" => 1}, pos \\ {0, 0}) do
     on_direction(directions, grid, pos)
   end
