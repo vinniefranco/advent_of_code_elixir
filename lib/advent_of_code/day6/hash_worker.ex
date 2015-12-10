@@ -34,9 +34,9 @@ defmodule AdventOfCode.Day6.HashWorker do
   end
 
   def handle_call(:total, _from, state) do
-    total = state |> HashDict.values |> Enum.reduce(0, &(&2 + &1))
+    curr_total = state |> HashDict.values |> Enum.reduce(0, &(&2 + &1))
 
-    {:reply, total, state}
+    {:reply, curr_total, state}
   end
 
   def handle_call(request, from, state) do

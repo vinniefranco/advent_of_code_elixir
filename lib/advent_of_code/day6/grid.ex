@@ -51,9 +51,9 @@ defmodule AdventOfCode.Day6.Grid do
   def handle_call(:total, _from, state) do
     {pids, worker_type} = state
 
-    total = pids |> Enum.reduce(0, &(&2 + worker_type.total(&1)))
+    curr_total = pids |> Enum.reduce(0, &(&2 + worker_type.total(&1)))
 
-    {:reply, total, state}
+    {:reply, curr_total, state}
   end
 
   def handle_call(:to_string, _from, state) do

@@ -13,11 +13,24 @@ defmodule AdventOfCode.Day6 do
     operation |> parse_operation |> execute
   end
 
-  def parse_operation(operation) do
-    [ _, _, c1, c2 | coords ] =
-      Regex.run(~r/((\w+)(?:\s(\w+))?)\s(\d+),(\d+)\sthrough\s(\d+),(\d+)/, operation)
+  @doc ~S"""
+      iex> AdventOfCode.Day6.parse_operation("turn on 0,0 through 999,999")
+      { :turn_on, {0, 0}, {999, 999} }
+  """
+  def parse_operation("turn on" <> rest) do
+    rest |> get_movement(:turn_on)
+  end
 
-    action = [c1, c2] |> Enum.join("_") |> String.replace(~r/_$/, "") |> String.to_atom
+  def parse_operation("turn off" <> rest) do
+    rest |> get_movement(:turn_off)
+  end
+
+  def parse_operation("toggle" <> rest) do
+    rest |> get_movement(:toggle)
+  end
+
+  def get_movement(operation, action) do
+    [ _ | coords ]= Regex.run(~r/(\d+),(\d+) through (\d+),(\d+)/, operation)
 
     [start_at, end_at] =
       coords
