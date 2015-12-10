@@ -1,12 +1,12 @@
 defmodule AdventOfCode.Day6 do
-  alias AdventOfCode.Day6.BitGrid
+  alias AdventOfCode.Day6.Grid
 
-  def execute_operations(operations) do
-    BitGrid.start_link(1_000)
+  def execute_operations(worker_type, operations) do
+    Grid.start_link(worker_type, 1_000)
 
     operations |> Enum.each(&(execute_operation &1))
 
-    BitGrid.total_lit
+    Grid.total
   end
 
   def execute_operation(operation) do
@@ -30,7 +30,7 @@ defmodule AdventOfCode.Day6 do
   end
 
   defp execute({action, start_at, end_at}) do
-    apply(BitGrid, action, [start_at, end_at])
+    apply(Grid, action, [start_at, end_at])
   end
 
 end
