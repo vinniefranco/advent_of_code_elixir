@@ -27,4 +27,5 @@ defmodule AdventOfCode.Day8 do
   defp eval_length({str, _}) do
     str |> String.length
   end
+
 end
