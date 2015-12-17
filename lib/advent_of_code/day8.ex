@@ -1,13 +1,23 @@
 defmodule AdventOfCode.Day8 do
 
+  def santas_encoded_list_size(input) do
+    encoded = input |> total_lines_of_code(&encode_code/1)
+
+    encoded - total_lines_of_code(input)
+  end
+
   def santas_list_size(input) do
     input
     |> total_lines_of_code
     |> minus_total_chars_in_memory(input)
   end
 
-  defp total_lines_of_code(input) do
-    input |> Enum.reduce(0, &(&2 + String.length(&1)))
+  def encode_code(val) do
+    Macro.to_string(quote do: unquote(val))
+  end
+
+  defp total_lines_of_code(input, code_fn \\ fn val -> val end) do
+    input |> Enum.reduce(0, &(&2 + String.length(code_fn.(&1))))
   end
 
   defp minus_total_chars_in_memory(loc, input) do
